@@ -33,7 +33,12 @@
 	#include <Seeed_Arduino_FS.h>
 #endif
 
-#if defined(ARDUINO_WIO_TERMINAL) || defined(ARDUINO_M5_SERIES)
+#if defined(ARDUINO_ARCH_RP2040)
+	#include <SDFS.h>
+	#include <SPI.h>
+#endif
+
+#if defined(ARDUINO_WIO_TERMINAL) || defined(ARDUINO_M5_SERIES) || defined(ARDUINO_ARCH_RP2040)
 
 	// TODO: want to make the program more abstract and common.
 

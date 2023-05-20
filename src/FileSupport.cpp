@@ -10,10 +10,15 @@
 
 #include "FileSupport.h"
 
-#if defined(ARDUINO_WIO_TERMINAL) || defined(ARDUINO_M5_SERIES)
+#if defined(ARDUINO_WIO_TERMINAL) || defined(ARDUINO_M5_SERIES) || defined(ARDUINO_ARCH_RP2040)
 
 std::list<fileclass_t> f_list;
+
+	#if defined(ARDUINO_ARCH_RP2040)
+fs::FS &fontFS = SDFS;
+	#else
 fs::FS &fontFS = SD;
+	#endif
 
 void ffsupport_setffs(fs::FS &ffs) {
 	fontFS = ffs;
@@ -42,6 +47,11 @@ fileclass_t *ffsupport_fopen(const char *Filename, const char *mode) {
 	} else {
 		fileclass._fstream = fontFS.open(Filename, FA_READ);
 	}
+
+	#elif defined(ARDUINO_ARCH_RP2040)
+	fontFS.begin();
+	fileclass._fstream = fontFS.open(Filename, "r");
+
 	#else
 	// For M5Stack and others
 	fileclass._fstream = fontFS.open(Filename, mode);
