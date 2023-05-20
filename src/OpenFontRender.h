@@ -334,7 +334,7 @@ private:
 	FT_Error loadFont(enum OFR::LoadFontFrom from);
 	uint32_t getFontMaxHeight();
 	void draw2screen(FT_BitmapGlyph glyph, uint32_t x, uint32_t y, uint16_t fg, uint16_t bg);
-	uint16_t decodeUTF8(uint8_t *buf, uint16_t *index, uint16_t remaining);
+	uint32_t decodeUTF8(uint8_t *buf, uint16_t *index, uint16_t remaining);
 	uint16_t color565(uint8_t r, uint8_t g, uint8_t b);
 	uint16_t alphaBlend(uint8_t alpha, uint16_t fgc, uint16_t bgc);
 
