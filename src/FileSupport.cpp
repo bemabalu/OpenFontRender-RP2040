@@ -13,6 +13,7 @@
 #if defined(ARDUINO_WIO_TERMINAL) || defined(ARDUINO_M5_SERIES) || defined(ARDUINO_ARCH_RP2040)
 
 std::list<fileclass_t> f_list;
+fileclass_t fontFile;
 
 	#if defined(ARDUINO_ARCH_RP2040)
 fs::FS &fontFS = SDFS;
@@ -50,15 +51,16 @@ fileclass_t *ffsupport_fopen(const char *Filename, const char *mode) {
 
 	#elif defined(ARDUINO_ARCH_RP2040)
 	fontFS.begin();
-	fileclass._fstream = fontFS.open(Filename, "r");
-
+	// fileclass._fstream = fontFS.open(Filename, "r");
+	fontFile._fstream = fontFS.open(Filename, "r");
 	#else
 	// For M5Stack and others
 	fileclass._fstream = fontFS.open(Filename, mode);
 	#endif
 
-	f_list.push_back(fileclass);
-	return &f_list.back();
+	// f_list.push_back(fileclass);
+	// return &f_list.back();
+	return &fontFile;
 }
 
 void ffsupport_fclose(fileclass_t *stream) {
